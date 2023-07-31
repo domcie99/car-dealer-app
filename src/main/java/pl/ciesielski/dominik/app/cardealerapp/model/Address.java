@@ -3,12 +3,14 @@ package pl.ciesielski.dominik.app.cardealerapp.model;
 public class Address {
     private String street;
     private String city;
-    private String postalCode;
+    private String zipCode;
+    private String country;
 
-    public Address(String street, String city, String postalCode) {
+    public Address(String street, String city, String zipCode, String country) {
         this.street = street;
         this.city = city;
-        this.postalCode = postalCode;
+        this.zipCode = zipCode;
+        this.country = country;
     }
 
     public String getStreet() {
@@ -27,11 +29,33 @@ public class Address {
         this.city = city;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getFullAddress() {
+        return street + ", " + city + ", " + zipCode + ", " + country;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }
