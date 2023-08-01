@@ -46,11 +46,11 @@ public class DatabaseInitializer implements DatabaseConnection {
     private void createTransactionsTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS transactions ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "client_id INT NOT NULL,"
+                + "client_email VARCHAR(255) NOT NULL,"
                 + "vin_number VARCHAR(255) NOT NULL,"
                 + "price INT NOT NULL,"
                 + "transaction_date DATE NOT NULL,"
-                + "FOREIGN KEY (client_id) REFERENCES clients(id),"
+                + "FOREIGN KEY (client_email) REFERENCES clients(email),"
                 + "FOREIGN KEY (vin_number) REFERENCES vehicles(vinNumber)"
                 + ")";
         executeUpdateQuery(connection, query);
