@@ -1,24 +1,18 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class Client {
-    private int id;
     private String firstName;
     private String lastName;
     private Address address;
     private String phoneNumber;
     private String email;
 
-    public Client(int id, String firstName, String lastName, Address address, String phoneNumber, String email) {
-        this.id = id;
+    public Client(String firstName, String lastName, Address address, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -64,7 +58,6 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address=" + address +
