@@ -1,7 +1,5 @@
 package pl.ciesielski.dominik.app.cardealerapp.data.jdbc;
 
-import pl.ciesielski.dominik.app.cardealerapp.data.jdbc.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

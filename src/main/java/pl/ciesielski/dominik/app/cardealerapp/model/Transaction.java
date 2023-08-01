@@ -9,7 +9,7 @@ public class Transaction {
     private double price;
     private Date transactionDate;
 
-    public Transaction(Vehicle vehicle, Client client, double price, Date transactionDate) {
+    public Transaction(int id, Vehicle vehicle, Client client, double price, Date transactionDate) {
         this.id = id;
         this.vehicle = vehicle;
         this.client = client;
