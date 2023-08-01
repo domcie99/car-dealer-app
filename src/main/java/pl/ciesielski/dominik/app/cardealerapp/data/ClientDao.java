@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDao implements DatabaseConnection {
+
     public void addClient(Client client) {
         try (Connection connection = getConnection()) {
             String query = "INSERT INTO clients (first_name, last_name, phone_number, email, address) VALUES (?, ?, ?, ?, ?)";
@@ -20,42 +21,43 @@ public class ClientDao implements DatabaseConnection {
             preparedStatement.setString(2, client.getLastName());
             preparedStatement.setString(3, client.getPhoneNumber());
             preparedStatement.setString(4, client.getEmail());
-            preparedStatement.setString(5, client.getAddress().getFullAddress());
+            preparedStatement.setString(5, client.getAddress().toString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Client getClientById(int id) {
+    public Client getClientByEmail(String email) {
         try (Connection connection = getConnection()) {
-            String query = "SELECT * FROM clients WHERE id=?";
+            String query = "SELECT * FROM clients WHERE email=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
-                String email = resultSet.getString("email");
-                String fullAddress = resultSet.getString("address");
+                String addressString = resultSet.getString("address");
 
-                // Split the fullAddress into separate parts (street, city, etc.)
-                String[] addressParts = fullAddress.split(", ");
-                String street = addressParts[0];
-                String city = addressParts[1];
-                String zipCode = addressParts[2];
-                String country = addressParts[3];
+                Address address = createAddressFromString(addressString);
 
-                Address address = new Address(street, city, zipCode, country);
-
-                return new Client(id, firstName, lastName, address, phoneNumber, email);
+                return new Client(firstName, lastName, address, phoneNumber, email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private Address createAddressFromString(String addressString) {
+        String[] addressParts = addressString.split(",");
+        String street = addressParts[0];
+        String city = addressParts[1];
+        String zipCode = addressParts[2];
+        String country = addressParts[3];
+        return new Address(street, city, zipCode, country);
     }
 
     public List<Client> getAllClients() {
@@ -66,23 +68,14 @@ public class ClientDao implements DatabaseConnection {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
                 String email = resultSet.getString("email");
-                String fullAddress = resultSet.getString("address");
+                String addressString = resultSet.getString("address");
 
-                // Split the fullAddress into separate parts (street, city, etc.)
-                String[] addressParts = fullAddress.split(", ");
-                String street = addressParts[0];
-                String city = addressParts[1];
-                String zipCode = addressParts[2];
-                String country = addressParts[3];
-
-                Address address = new Address(street, city, zipCode, country);
-
-                clients.add(new Client(id, firstName, lastName, address, phoneNumber, email));
+                Address address = createAddressFromString(addressString);
+                clients.add(new Client(firstName, lastName, address, phoneNumber, email));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,25 +85,24 @@ public class ClientDao implements DatabaseConnection {
 
     public void updateClient(Client client) {
         try (Connection connection = getConnection()) {
-            String query = "UPDATE clients SET first_name=?, last_name=?, phone_number=?, email=?, address=? WHERE id=?";
+            String query = "UPDATE clients SET first_name=?, last_name=?, phone_number=?, address=? WHERE email=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, client.getFirstName());
             preparedStatement.setString(2, client.getLastName());
             preparedStatement.setString(3, client.getPhoneNumber());
-            preparedStatement.setString(4, client.getEmail());
-            preparedStatement.setString(5, client.getAddress().getFullAddress());
-            preparedStatement.setInt(6, client.getId());
+            preparedStatement.setString(4, client.getAddress().toString());
+            preparedStatement.setString(5, client.getEmail());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteClient(int id) {
+    public void deleteClient(String email) {
         try (Connection connection = getConnection()) {
-            String query = "DELETE FROM clients WHERE id=?";
+            String query = "DELETE FROM clients WHERE email=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, email);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
