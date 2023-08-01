@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public interface DatabaseConnection {
 
     default Connection getConnection() {
-        String url = "jdbc:h2:~/cardealerapp-data";
+        String url = "jdbc:h2:~/cardealerapp";
         String username = "sa";
         String password = "";
 
