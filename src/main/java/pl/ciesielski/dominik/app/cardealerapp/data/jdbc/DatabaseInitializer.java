@@ -21,11 +21,10 @@ public class DatabaseInitializer implements DatabaseConnection {
 
     private void createClientsTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS clients ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
                 + "first_name VARCHAR(255) NOT NULL,"
                 + "last_name VARCHAR(255) NOT NULL,"
                 + "phone_number VARCHAR(15) NOT NULL,"
-                + "email VARCHAR(255) NOT NULL,"
+                + "email VARCHAR(255) PRIMARY KEY,"
                 + "address VARCHAR(255) NOT NULL"
                 + ")";
         executeUpdateQuery(connection, query);
@@ -59,11 +58,10 @@ public class DatabaseInitializer implements DatabaseConnection {
 
     private void createSellersTable(Connection connection) throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS sellers ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
                 + "first_name VARCHAR(255) NOT NULL,"
                 + "last_name VARCHAR(255) NOT NULL,"
                 + "phone_number VARCHAR(15) NOT NULL,"
-                + "email VARCHAR(255) NOT NULL"
+                + "email VARCHAR(255) PRIMARY KEY"
                 + ")";
         executeUpdateQuery(connection, query);
     }
