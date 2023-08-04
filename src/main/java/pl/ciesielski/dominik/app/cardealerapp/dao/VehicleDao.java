@@ -1,7 +1,6 @@
-package pl.ciesielski.dominik.app.cardealerapp.data;
+package pl.ciesielski.dominik.app.cardealerapp.dao;
 
-import pl.ciesielski.dominik.app.cardealerapp.data.jdbc.DatabaseConnection;
-import pl.ciesielski.dominik.app.cardealerapp.model.Address;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnection;
 import pl.ciesielski.dominik.app.cardealerapp.model.Vehicle;
 
 import java.sql.*;
