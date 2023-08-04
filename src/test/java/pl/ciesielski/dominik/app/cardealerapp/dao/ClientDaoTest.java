@@ -17,6 +17,8 @@ class ClientDaoTest {
         System.out.println("TearDown"); // TODO: 04.08.2023 truncate Bazy danych
     }
 
+    // TODO: 04.08.2023 Napisac test jednostkowy dla metody addclient 
+    
     @Test
     @Disabled
     void givenClientDaoAndEmail_whenGetClientByEmail_thenClientIsNotNull() {
