@@ -1,4 +1,4 @@
-package pl.ciesielski.dominik.app.cardealerapp.data.jdbc;
+package pl.ciesielski.dominik.app.cardealerapp.dao.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

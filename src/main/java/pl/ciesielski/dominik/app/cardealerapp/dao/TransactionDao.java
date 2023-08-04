@@ -1,6 +1,6 @@
-package pl.ciesielski.dominik.app.cardealerapp.data;
+package pl.ciesielski.dominik.app.cardealerapp.dao;
 
-import pl.ciesielski.dominik.app.cardealerapp.data.jdbc.DatabaseConnection;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnection;
 import pl.ciesielski.dominik.app.cardealerapp.model.Transaction;
 import pl.ciesielski.dominik.app.cardealerapp.model.Client;
 import pl.ciesielski.dominik.app.cardealerapp.model.Vehicle;
@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TransactionDao implements DatabaseConnection {
