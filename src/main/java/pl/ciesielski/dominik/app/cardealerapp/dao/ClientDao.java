@@ -55,7 +55,10 @@ public class ClientDao {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
-                Address address = getAddressById(resultSet.getLong("address_id"));
+
+                AddressDao addressDao = new AddressDao();
+                Address address = addressDao.getAddressById(resultSet.getLong("address_id"));
+
                 return new Client(clientId, firstName, lastName, address, phoneNumber, email);
             }
         } catch (SQLException e) {
@@ -76,7 +79,10 @@ public class ClientDao {
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
                 String email = resultSet.getString("email");
-                Address address = getAddressById(resultSet.getLong("address_id"));
+
+                AddressDao addressDao = new AddressDao();
+                Address address = addressDao.getAddressById(resultSet.getLong("address_id"));
+
                 clients.add(new Client(clientId, firstName, lastName, address, phoneNumber, email));
             }
         } catch (SQLException e) {
