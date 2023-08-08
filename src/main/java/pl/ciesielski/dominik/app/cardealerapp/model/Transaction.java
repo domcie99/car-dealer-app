@@ -17,14 +17,13 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public Transaction(Vehicle vehicle, Client client, double price, Date transactionDate) {
-        this.vehicle = vehicle;
-        this.client = client;
-        this.price = price;
-        this.transactionDate = transactionDate;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     public Vehicle getVehicle() {
         return vehicle;

@@ -1,10 +1,16 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class AddressBuilder {
+    private int id;
     private String street;
     private String city;
     private String zipCode;
     private String country;
+
+    public AddressBuilder setId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public AddressBuilder setStreet(String street) {
         this.street = street;
@@ -21,7 +27,7 @@ public class AddressBuilder {
         return this;
     }
 
-    public AddressBuilder setCountry(String country){
+    public AddressBuilder setCountry(String country) {
         this.country = country;
         return this;
     }
@@ -31,6 +37,6 @@ public class AddressBuilder {
             throw new IllegalStateException("Street, city, zipCode and country are required.");
         }
 
-        return new Address(street, city, zipCode, country);
+        return new Address(id, street, city, zipCode, country);
     }
 }

@@ -3,6 +3,7 @@ package pl.ciesielski.dominik.app.cardealerapp.model;
 import java.util.Date;
 
 public class Vehicle {
+    private int id;
     private String brand;
     private String model;
     private int yearOfProduction;
@@ -11,7 +12,8 @@ public class Vehicle {
     private String vinNumber;
     private Date registrationDate;
 
-    public Vehicle(String brand, String model, int yearOfProduction, String technicalCondition, int mileage, String vinNumber, Date registrationDate) {
+    public Vehicle(int id, String brand, String model, int yearOfProduction, String technicalCondition, int mileage, String vinNumber, Date registrationDate) {
+        this.id = id;
         this.brand = brand;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
@@ -19,6 +21,14 @@ public class Vehicle {
         this.mileage = mileage;
         this.vinNumber = vinNumber;
         this.registrationDate = registrationDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getBrand() {

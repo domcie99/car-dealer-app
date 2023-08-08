@@ -1,17 +1,23 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class Address {
+    private int id;
     private String street;
     private String city;
     private String zipCode;
     private String country;
 
-    Address(String street, String city, String zipCode, String country) {
+    Address(int id, String street, String city, String zipCode, String country) {
+        this.id = id;
         this.street = street;
         this.city = city;
         this.zipCode = zipCode;
         this.country = country;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getStreet() {
         return street;
@@ -52,7 +58,8 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "street='" + street + '\'' +
+                "id=" + id +
+                ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", country='" + country + '\'' +

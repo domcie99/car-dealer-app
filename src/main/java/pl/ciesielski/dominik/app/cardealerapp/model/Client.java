@@ -1,15 +1,16 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class Client {
-    private Long id;
 
+    private int id;
     private String firstName;
     private String lastName;
     private Address address;
     private String phoneNumber;
     private String email;
 
-    public Client(String firstName, String lastName, Address address, String phoneNumber, String email) {
+    public Client(int id, String firstName, String lastName, Address address, String phoneNumber, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -17,11 +18,11 @@ public class Client {
         this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
