@@ -1,8 +1,8 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
-import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnection;
 import pl.ciesielski.dominik.app.cardealerapp.model.Address;
 import pl.ciesielski.dominik.app.cardealerapp.model.Client;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDao implements DatabaseConnection {
+public class ClientDao {
+
+    private Connection getConnection(){
+        return DatabaseConnectionManager.getInstance().getConnection();
+    }
 
     public void addClient(Client client) {
         try (Connection connection = getConnection()) {

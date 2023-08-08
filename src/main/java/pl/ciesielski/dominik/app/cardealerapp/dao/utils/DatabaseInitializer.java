@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DatabaseInitializer implements DatabaseConnection {
+public class DatabaseInitializer {
+
+    private DatabaseConnectionManager connectionManager;
 
     public void createTables() {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             createClientsTable(connection);
             createVehiclesTable(connection);
             createTransactionsTable(connection);
