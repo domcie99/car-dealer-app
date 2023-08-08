@@ -33,12 +33,13 @@ public class DatabaseInitializer {
 
     private static final String CREATE_VEHICLES_TABLE =
             "CREATE TABLE IF NOT EXISTS vehicles (" +
-                    "vin_number VARCHAR(255) PRIMARY KEY," +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
                     "brand VARCHAR(255) NOT NULL," +
                     "model VARCHAR(255) NOT NULL," +
                     "year_of_production INT NOT NULL," +
                     "technical_condition VARCHAR(255) NOT NULL," +
                     "mileage INT NOT NULL," +
+                    "vin_number VARCHAR(255) NOT NULL UNIQUE," +
                     "registration_date DATE NOT NULL" +
                     ")";
 
