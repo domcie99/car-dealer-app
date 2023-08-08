@@ -1,6 +1,7 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import pl.ciesielski.dominik.app.cardealerapp.model.Address;
+import pl.ciesielski.dominik.app.cardealerapp.model.AddressBuilder;
 import pl.ciesielski.dominik.app.cardealerapp.model.Client;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 
@@ -43,9 +44,14 @@ public class ClientDao {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
-                String addressString = resultSet.getString("address");
+                String[] addressParts = resultSet.getString("address").split(",");
 
-                Address address = createAddressFromString(addressString);
+                Address address = new AddressBuilder()
+                        .setStreet(addressParts[0])
+                        .setCity(addressParts[1])
+                        .setZipCode(addressParts[2])
+                        .setCountry(addressParts[3])
+                        .build();
 
                 return new Client(firstName, lastName, address, phoneNumber, email);
             }
@@ -53,15 +59,6 @@ public class ClientDao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private Address createAddressFromString(String addressString) {
-        String[] addressParts = addressString.split(",");
-        String street = addressParts[0];
-        String city = addressParts[1];
-        String zipCode = addressParts[2];
-        String country = addressParts[3];
-        return new Address(street, city, zipCode, country);
     }
 
     public List<Client> getAllClients() {
@@ -76,9 +73,15 @@ public class ClientDao {
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
                 String email = resultSet.getString("email");
-                String addressString = resultSet.getString("address");
+                String[] addressParts = resultSet.getString("address").split(",");
 
-                Address address = createAddressFromString(addressString);
+                Address address = new AddressBuilder()
+                        .setStreet(addressParts[0])
+                        .setCity(addressParts[1])
+                        .setZipCode(addressParts[2])
+                        .setCountry(addressParts[3])
+                        .build();
+
                 clients.add(new Client(firstName, lastName, address, phoneNumber, email));
             }
         } catch (SQLException e) {
