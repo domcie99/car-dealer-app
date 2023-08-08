@@ -2,14 +2,14 @@ package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class Client {
 
-    private int id;
+    private long id;
     private String firstName;
     private String lastName;
     private Address address;
     private String phoneNumber;
     private String email;
 
-    public Client(int id, String firstName, String lastName, Address address, String phoneNumber, String email) {
+    public Client(long id, String firstName, String lastName, Address address, String phoneNumber, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -18,11 +18,11 @@ public class Client {
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

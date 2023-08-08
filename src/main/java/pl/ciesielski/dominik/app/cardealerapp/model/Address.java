@@ -1,13 +1,13 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class Address {
-    private int id;
+    private long id;
     private String street;
     private String city;
     private String zipCode;
     private String country;
 
-    Address(int id, String street, String city, String zipCode, String country) {
+    Address(long id, String street, String city, String zipCode, String country) {
         this.id = id;
         this.street = street;
         this.city = city;
@@ -15,9 +15,9 @@ public class Address {
         this.country = country;
     }
 
-    public int getId() { return id; }
+    public long getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(long id) { this.id = id; }
 
     public String getStreet() {
         return street;

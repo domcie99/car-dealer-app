@@ -1,13 +1,13 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class AddressBuilder {
-    private int id;
+    private long id;
     private String street;
     private String city;
     private String zipCode;
     private String country;
 
-    public AddressBuilder setId(int id) {
+    public AddressBuilder setId(long id) {
         this.id = id;
         return this;
     }

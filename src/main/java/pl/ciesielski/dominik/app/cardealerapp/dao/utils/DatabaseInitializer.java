@@ -59,6 +59,7 @@ public class DatabaseInitializer {
                     "street VARCHAR(255) NOT NULL," +
                     "city VARCHAR(255) NOT NULL," +
                     "zip_code VARCHAR(10) NOT NULL" +
+                    "country VARCHAR(255) NOT NULL," +
                     ")";
 
     private static final String CREATE_UNIQUE_KEY_SEQUENCE =

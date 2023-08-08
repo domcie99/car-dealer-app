@@ -1,13 +1,13 @@
 package pl.ciesielski.dominik.app.cardealerapp.model;
 
 public class Seller {
-    private int id;
+    private long id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
 
-    public Seller(int id, String firstName, String lastName, String phoneNumber, String email) {
+    public Seller(long id, String firstName, String lastName, String phoneNumber, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -15,11 +15,11 @@ public class Seller {
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
