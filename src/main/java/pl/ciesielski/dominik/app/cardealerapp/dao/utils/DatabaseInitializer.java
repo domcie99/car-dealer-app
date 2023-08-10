@@ -91,7 +91,7 @@ public class DatabaseInitializer {
             executeUpdateQuery(connection, CREATE_TRANSACTIONS_SEQUENCE);
             executeUpdateQuery(connection, CREATE_ADDRESSES_SEQUENCE);
 
-            System.out.println("Tables have been created.");
+            //System.out.println("Tables have been created.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

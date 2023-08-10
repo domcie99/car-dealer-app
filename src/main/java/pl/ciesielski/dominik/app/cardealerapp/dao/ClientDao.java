@@ -12,6 +12,7 @@ public class ClientDao {
 
     private static final String INSERT_CLIENT = "INSERT INTO clients (first_name, last_name, phone_number, email, address_id) VALUES (?, ?, ?, ?, ?)";
     private static final String SELECT_CLIENT_BY_EMAIL = "SELECT * FROM clients WHERE email=?";
+    private static final String SELECT_CLIENT_BY_ID = "SELECT * FROM clients WHERE id=?";
     private static final String SELECT_ALL_CLIENTS = "SELECT * FROM clients";
     private static final String UPDATE_CLIENT = "UPDATE clients SET first_name=?, last_name=?, phone_number=?, address_id=? WHERE email=?";
     private static final String DELETE_CLIENT = "DELETE FROM clients WHERE email=?";
@@ -113,5 +114,29 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Client getClientById(long id) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CLIENT_BY_ID);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                long clientId = resultSet.getLong("id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String phoneNumber = resultSet.getString("phone_number");
+                String email = resultSet.getString("email");
+
+                AddressDao addressDao = new AddressDao();
+                Address address = addressDao.getAddressById(resultSet.getLong("address_id"));
+
+                return new Client(clientId, firstName, lastName, address, phoneNumber, email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
