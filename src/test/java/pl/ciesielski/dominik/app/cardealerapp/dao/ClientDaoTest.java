@@ -1,20 +1,59 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import org.junit.jupiter.api.*;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseInitializer;
+import pl.ciesielski.dominik.app.cardealerapp.model.Address;
+import pl.ciesielski.dominik.app.cardealerapp.model.AddressBuilder;
 import pl.ciesielski.dominik.app.cardealerapp.model.Client;
+import pl.ciesielski.dominik.app.cardealerapp.model.utils.nextIdSequence;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientDaoTest {
 
+    private ClientDao clientDao;
+    private AddressDao addressDao;
+
+    Address address1;
+
+    private long nextClientId;
+    private long nextAddressId;
+
     @BeforeEach
     void setUp() {
-        System.out.println("Setup"); // TODO: 04.08.2023 Napisać kod który wstawi niebędne dane do bazy danych.
+        System.out.println("Setup");
+        DatabaseInitializer initializer = new DatabaseInitializer();
+        initializer.createTables();
+
+        nextClientId = nextIdSequence.getNextIdForTable("Clients");
+        nextAddressId = nextIdSequence.getNextIdForTable("Addresses");
+
+        addressDao = new AddressDao();
+
+        address1 = new AddressBuilder()
+                .setId(nextAddressId)
+                .setStreet("123 Main St")
+                .setCity("New York")
+                .setZipCode("12345")
+                .setCountry("USA")
+                .build();
+        addressDao.addAddress(address1);
     }
 
     @AfterEach
     void tearDown() {
-        System.out.println("TearDown"); // TODO: 04.08.2023 truncate Bazy danych
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DROP ALL OBJECTS;");
+            System.out.println("Database has been cleaned.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // TODO: 04.08.2023 Napisac test jednostkowy dla metody addclient 
@@ -44,5 +83,27 @@ class ClientDaoTest {
 
         // Then
         Assertions.assertNull(client, "client is not null");
+    }
+
+    @Test
+    void givenClientDaoAndValidClient_whenAddClient_thenClientIsAddedToDatabase() {
+        // Given
+        ClientDao clientDao = new ClientDao();
+        Client client = new Client(
+                nextClientId,
+                "Mike",
+                "Johnson",
+                address1,
+                "+1 555-123-4567",
+                "mike.johnson@example.com");
+
+        // When
+        clientDao.addClient(client);
+
+        // Then
+        Client retrievedClient = clientDao.getClientById(client.getId());
+        assertNotNull(retrievedClient, "Retrieved client is null");
+        assertEquals(client.getFirstName(), retrievedClient.getFirstName(), "First names don't match");
+        assertEquals(client.getLastName(), retrievedClient.getLastName(), "Last names don't match");
     }
 }

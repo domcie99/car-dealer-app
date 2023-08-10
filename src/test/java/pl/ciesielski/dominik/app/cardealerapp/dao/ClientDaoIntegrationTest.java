@@ -50,9 +50,11 @@ class ClientDaoIntegrationTest {
         addressDao.addAddress(address2);
 
         clientDao = new ClientDao();
-        Client client1 = new Client(RandomIdGenerator.generateRandomLong(), "John", "Doe", address1, "+1 123-456-7890", "john.doe@example.com");
-        Client client2 = new Client(RandomIdGenerator.generateRandomLong(), "Jane", "Smith", address2, "+1 987-654-3210", "jane.smith@example.com");
+
+        Client client1 = new Client(nextIdSequence.getNextIdForTable("Clients"), "John", "Doe", address1, "+1 123-456-7890", "john.doe@example.com");
         clientDao.addClient(client1);
+
+        Client client2 = new Client(nextIdSequence.getNextIdForTable("Clients"), "Jane", "Smith", address2, "+1 987-654-3210", "jane.smith@example.com");
         clientDao.addClient(client2);
     }
 
@@ -79,6 +81,6 @@ class ClientDaoIntegrationTest {
 
         // Then
         assertNotNull(client, "Client is null");
-        assertEquals("John", client.getFirstName());
+        assertEquals(email, client.getEmail());
     }
 }
