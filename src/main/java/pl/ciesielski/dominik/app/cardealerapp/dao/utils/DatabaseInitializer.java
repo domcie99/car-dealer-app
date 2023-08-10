@@ -44,11 +44,11 @@ public class DatabaseInitializer {
             "CREATE TABLE IF NOT EXISTS transactions (" +
                     "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
                     "client_id BIGINT NOT NULL," +
-                    "vin_number VARCHAR(255) NOT NULL," +
+                    "vehicle_id VARCHAR(255) NOT NULL," +
                     "price DOUBLE NOT NULL," +
                     "transaction_date DATE NOT NULL," +
                     "FOREIGN KEY (client_id) REFERENCES clients(id)," +
-                    "FOREIGN KEY (vin_number) REFERENCES vehicles(vin_number)" +
+                    "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)" +
                     ")";
 
     private static final String CREATE_ADDRESSES_TABLE =
