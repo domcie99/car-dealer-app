@@ -7,9 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DatabaseInitializer {
-    private Connection getConnection(){
-        return DatabaseConnectionManager.getInstance().getConnection();
-    }
 
     private static final String CREATE_CLIENTS_TABLE =
             "CREATE TABLE IF NOT EXISTS clients (" +
@@ -59,12 +56,20 @@ public class DatabaseInitializer {
                     "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
                     "street VARCHAR(255) NOT NULL," +
                     "city VARCHAR(255) NOT NULL," +
-                    "zip_code VARCHAR(10) NOT NULL" +
-                    "country VARCHAR(255) NOT NULL," +
+                    "zip_code VARCHAR(10) NOT NULL," +
+                    "country VARCHAR(255) NOT NULL" +
                     ")";
 
-    private static final String CREATE_UNIQUE_KEY_SEQUENCE =
-            "CREATE SEQUENCE IF NOT EXISTS unique_key_seq";
+    private static final String CREATE_CLIENTS_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS clients_seq";
+    private static final String CREATE_SELLERS_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS sellers_seq";
+    private static final String CREATE_VEHICLES_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS vehicles_seq";
+    private static final String CREATE_TRANSACTIONS_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS transactions_seq";
+    private static final String CREATE_ADDRESSES_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS addresses_seq";
 
     private static void executeUpdateQuery(Connection connection, String query) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -73,13 +78,18 @@ public class DatabaseInitializer {
     }
 
     public void createTables() {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             executeUpdateQuery(connection, CREATE_ADDRESSES_TABLE);
             executeUpdateQuery(connection, CREATE_CLIENTS_TABLE);
             executeUpdateQuery(connection, CREATE_SELLERS_TABLE);
             executeUpdateQuery(connection, CREATE_VEHICLES_TABLE);
             executeUpdateQuery(connection, CREATE_TRANSACTIONS_TABLE);
-            executeUpdateQuery(connection, CREATE_UNIQUE_KEY_SEQUENCE);
+
+            executeUpdateQuery(connection, CREATE_CLIENTS_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_SELLERS_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_VEHICLES_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_TRANSACTIONS_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_ADDRESSES_SEQUENCE);
 
             System.out.println("Tables have been created.");
         } catch (SQLException e) {

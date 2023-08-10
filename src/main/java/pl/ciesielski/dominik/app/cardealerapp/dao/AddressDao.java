@@ -20,7 +20,7 @@ public class AddressDao {
     private static final String DELETE_ADDRESS = "DELETE FROM addresses WHERE id=?";
 
     public void addAddress(Address address) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ADDRESS);
             preparedStatement.setString(1, address.getStreet());
             preparedStatement.setString(2, address.getCity());
@@ -33,7 +33,7 @@ public class AddressDao {
     }
 
     public Address getAddressById(long id) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ADDRESS_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -55,7 +55,7 @@ public class AddressDao {
 
     public List<Address> getAllAddresses() {
         List<Address> addresses = new ArrayList<>();
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ADDRESSES);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -76,7 +76,7 @@ public class AddressDao {
     }
 
     public void updateAddress(Address address) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ADDRESS);
             preparedStatement.setString(1, address.getStreet());
             preparedStatement.setString(2, address.getCity());
@@ -90,16 +90,12 @@ public class AddressDao {
     }
 
     public void deleteAddress(long id) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ADDRESS);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private Connection getConnection() {
-        return DatabaseConnectionManager.getInstance().getConnection();
     }
 }

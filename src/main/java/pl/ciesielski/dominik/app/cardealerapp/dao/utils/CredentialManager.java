@@ -26,14 +26,14 @@ public class CredentialManager {
     }
 
     public String getUrl() {
-        return properties.getProperty("db.url");
+        return properties.getProperty("url");
     }
 
     public String getUsername() {
-        return properties.getProperty("db.username");
+        return properties.getProperty("username");
     }
 
     public String getPassword() {
-        return properties.getProperty("db.password");
+        return properties.getProperty("password");
     }
 }

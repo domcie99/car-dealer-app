@@ -17,7 +17,7 @@ public class ClientDao {
     private static final String DELETE_CLIENT = "DELETE FROM clients WHERE email=?";
 
     public void addClient(Client client) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CLIENT, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getFirstName());
             preparedStatement.setString(2, client.getLastName());
@@ -45,7 +45,7 @@ public class ClientDao {
     }
 
     public Client getClientByEmail(String email) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CLIENT_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,7 +69,7 @@ public class ClientDao {
 
     public List<Client> getAllClients() {
         List<Client> clients = new ArrayList<>();
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_CLIENTS);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -92,7 +92,7 @@ public class ClientDao {
     }
 
     public void updateClient(Client client) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CLIENT);
             preparedStatement.setString(1, client.getFirstName());
             preparedStatement.setString(2, client.getLastName());
@@ -106,16 +106,12 @@ public class ClientDao {
     }
 
     public void deleteClient(String email) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CLIENT);
             preparedStatement.setString(1, email);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private Connection getConnection(){
-        return DatabaseConnectionManager.getInstance().getConnection();
     }
 }

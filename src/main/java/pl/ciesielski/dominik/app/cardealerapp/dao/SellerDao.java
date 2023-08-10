@@ -6,8 +6,4 @@ import java.sql.Connection;
 
 public class SellerDao {
 
-    private Connection getConnection(){
-        return DatabaseConnectionManager.getInstance().getConnection();
-    }
-
 }
