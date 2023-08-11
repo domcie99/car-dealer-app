@@ -11,8 +11,7 @@ import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseInitializer;
 import pl.ciesielski.dominik.app.cardealerapp.model.Address;
 import pl.ciesielski.dominik.app.cardealerapp.model.AddressBuilder;
 import pl.ciesielski.dominik.app.cardealerapp.model.Client;
-import pl.ciesielski.dominik.app.cardealerapp.model.utils.RandomIdGenerator;
-import pl.ciesielski.dominik.app.cardealerapp.model.utils.nextIdSequence;
+import pl.ciesielski.dominik.app.cardealerapp.model.utils.NextIdSequence;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ class ClientDaoIntegrationTest {
         addressDao = new AddressDao();
 
         Address address1 = new AddressBuilder()
-                .setId(nextIdSequence.getNextIdForTable("Addresses"))
+                .setId(NextIdSequence.getNextIdForTable("Addresses"))
                 .setStreet("123 Main St")
                 .setCity("New York")
                 .setZipCode("12345")
@@ -41,7 +40,7 @@ class ClientDaoIntegrationTest {
         addressDao.addAddress(address1);
 
         Address address2 = new AddressBuilder()
-                .setId(nextIdSequence.getNextIdForTable("Addresses"))
+                .setId(NextIdSequence.getNextIdForTable("Addresses"))
                 .setStreet("456 Elm St")
                 .setCity("Los Angeles")
                 .setZipCode("98765")
@@ -51,10 +50,10 @@ class ClientDaoIntegrationTest {
 
         clientDao = new ClientDao();
 
-        Client client1 = new Client(nextIdSequence.getNextIdForTable("Clients"), "John", "Doe", address1, "+1 123-456-7890", "john.doe@example.com");
+        Client client1 = new Client(NextIdSequence.getNextIdForTable("Clients"), "John", "Doe", address1, "+1 123-456-7890", "john.doe@example.com");
         clientDao.addClient(client1);
 
-        Client client2 = new Client(nextIdSequence.getNextIdForTable("Clients"), "Jane", "Smith", address2, "+1 987-654-3210", "jane.smith@example.com");
+        Client client2 = new Client(NextIdSequence.getNextIdForTable("Clients"), "Jane", "Smith", address2, "+1 987-654-3210", "jane.smith@example.com");
         clientDao.addClient(client2);
     }
 

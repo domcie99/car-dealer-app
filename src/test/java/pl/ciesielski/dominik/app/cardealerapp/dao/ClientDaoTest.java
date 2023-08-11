@@ -6,7 +6,7 @@ import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseInitializer;
 import pl.ciesielski.dominik.app.cardealerapp.model.Address;
 import pl.ciesielski.dominik.app.cardealerapp.model.AddressBuilder;
 import pl.ciesielski.dominik.app.cardealerapp.model.Client;
-import pl.ciesielski.dominik.app.cardealerapp.model.utils.nextIdSequence;
+import pl.ciesielski.dominik.app.cardealerapp.model.utils.NextIdSequence;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -30,8 +30,8 @@ class ClientDaoTest {
         DatabaseInitializer initializer = new DatabaseInitializer();
         initializer.createTables();
 
-        nextClientId = nextIdSequence.getNextIdForTable("Clients");
-        nextAddressId = nextIdSequence.getNextIdForTable("Addresses");
+        nextClientId = NextIdSequence.getNextIdForTable("Clients");
+        nextAddressId = NextIdSequence.getNextIdForTable("Addresses");
 
         addressDao = new AddressDao();
 

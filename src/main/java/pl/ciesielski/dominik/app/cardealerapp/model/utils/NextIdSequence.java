@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class nextIdSequence {
+public class NextIdSequence {
     public static long getNextIdForTable(String tableName) {
         String sequenceName = tableName.toLowerCase() + "_seq";
 
