@@ -3,9 +3,9 @@ package pl.ciesielski.dominik.app.cardealerapp.dao;
 import org.junit.jupiter.api.*;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseInitializer;
-import pl.ciesielski.dominik.app.cardealerapp.model.Address;
-import pl.ciesielski.dominik.app.cardealerapp.model.AddressBuilder;
-import pl.ciesielski.dominik.app.cardealerapp.model.Client;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Address;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.AddressBuilder;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Client;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.NextIdSequence;
 
 import java.sql.Connection;

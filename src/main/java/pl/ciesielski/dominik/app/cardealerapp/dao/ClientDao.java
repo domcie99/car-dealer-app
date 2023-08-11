@@ -1,8 +1,8 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
-import pl.ciesielski.dominik.app.cardealerapp.model.Address;
-import pl.ciesielski.dominik.app.cardealerapp.model.Client;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Address;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Client;
 
 import java.sql.*;
 import java.util.ArrayList;
