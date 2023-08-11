@@ -12,6 +12,9 @@ public class Vehicle {
     private String vinNumber;
     private Date registrationDate;
 
+    public Vehicle() {
+    }
+
     public Vehicle(long id, String brand, String model, int yearOfProduction, String technicalCondition, int mileage, String vinNumber, Date registrationDate) {
         this.id = id;
         this.brand = brand;
@@ -85,5 +88,19 @@ public class Vehicle {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", yearOfProduction=" + yearOfProduction +
+                ", technicalCondition='" + technicalCondition + '\'' +
+                ", mileage=" + mileage +
+                ", vinNumber='" + vinNumber + '\'' +
+                ", registrationDate=" + registrationDate +
+                '}';
     }
 }
