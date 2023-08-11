@@ -1,5 +1,6 @@
 package pl.ciesielski.dominik.app.cardealerapp.controller;
 
+import pl.ciesielski.dominik.app.cardealerapp.api.exception.VehicleException;
 import pl.ciesielski.dominik.app.cardealerapp.controller.model.Vehicle;
 
 import java.util.List;
@@ -9,12 +10,24 @@ public class VehicleController { //Warstwa interakcji z użytkownikiem. Walidacj
 
     private static final Logger LOGGER = Logger.getLogger(VehicleController.class.getName());
 
-    public Vehicle create(Vehicle vehicle) {
+    public Vehicle create(Vehicle vehicle) throws VehicleException {
         //System.out.println("create(" + vehicle + ")");
         LOGGER.info("create(" + vehicle + ")");
-        //Walidacja i weryfikacja danych
-        LOGGER.info("create(...)=" + null);
-        return null;
+
+        if (vehicle != null) {
+            String brand = vehicle.getBrand();
+            if (brand != null) {
+                if (brand.length() < 2) {
+                    LOGGER.warning("Brand is to short");
+                }
+            } else {
+                LOGGER.warning("Missing brand name.");
+                throw new VehicleException("Missing brand name.");
+            }
+        }
+
+        LOGGER.info("create(...)=" + vehicle);
+        return vehicle;
     }
 
     public Vehicle read(Long id) {
