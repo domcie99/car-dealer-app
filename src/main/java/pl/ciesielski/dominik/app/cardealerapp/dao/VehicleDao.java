@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehicleDao {
+public class VehicleDao { //Warstwa dostępu do danych. Weryfikacja poprawności wprowadzania danych - błędy SQL. Utrwalanie i pobieranie danych na przykład z bazy danych.
 
     private static final String INSERT_VEHICLE = "INSERT INTO vehicles (brand, model, year_of_production, technical_condition, mileage, vin_number, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_VEHICLE_BY_ID = "SELECT * FROM vehicles WHERE id = ?";
