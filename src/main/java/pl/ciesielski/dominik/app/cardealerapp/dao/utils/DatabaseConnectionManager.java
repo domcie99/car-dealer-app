@@ -20,8 +20,14 @@ public class DatabaseConnectionManager {
         }
     }
 
-    public static DatabaseConnectionManager getInstance() {
-        return new DatabaseConnectionManager();
+    public static DatabaseConnectionManager getInstance() throws SQLException {
+        if (instance == null) {
+            instance = new DatabaseConnectionManager();
+        } else if (instance.getConnection().isClosed()) {
+            instance = new DatabaseConnectionManager();
+        }
+
+        return instance;
     }
 
     public Connection getConnection() {

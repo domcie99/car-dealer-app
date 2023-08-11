@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class CredentialManager {
+public class CredentialManager { // TODO: 11.08.2023 Test Jednostkowy 
     private static CredentialManager instance;
     private Properties properties;
 
     private CredentialManager() {
         properties = new Properties();
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("database.properties");
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("database.properties");
+                    //getClass().getClassLoader().getResourceAsStream("database.properties");
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
