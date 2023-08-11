@@ -3,13 +3,13 @@ package pl.ciesielski.dominik.app.cardealerapp.model;
 import java.util.Date;
 
 public class Transaction {
-    private int id;
+    private long id;
     private Vehicle vehicle;
     private Client client;
     private double price;
     private Date transactionDate;
 
-    public Transaction(int id, Vehicle vehicle, Client client, double price, Date transactionDate) {
+    public Transaction(long id, Vehicle vehicle, Client client, double price, Date transactionDate) {
         this.id = id;
         this.vehicle = vehicle;
         this.client = client;
@@ -17,14 +17,13 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public Transaction(Vehicle vehicle, Client client, double price, Date transactionDate) {
-        this.vehicle = vehicle;
-        this.client = client;
-        this.price = price;
-        this.transactionDate = transactionDate;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public int getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
     public Vehicle getVehicle() {
         return vehicle;

@@ -1,6 +1,6 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
-import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnection;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 import pl.ciesielski.dominik.app.cardealerapp.model.Seller;
 
 import java.sql.Connection;
@@ -10,35 +10,39 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SellerDao implements DatabaseConnection {
+public class SellerDao {
+
+    private static final String INSERT_SELLER = "INSERT INTO sellers (first_name, last_name, phone_number, email) VALUES (?, ?, ?, ?)";
+    private static final String GET_SELLER_BY_ID = "SELECT * FROM sellers WHERE id = ?";
+    private static final String GET_ALL_SELLERS = "SELECT * FROM sellers";
+    private static final String GET_SELLER_BY_EMAIL = "SELECT * FROM sellers WHERE email = ?";
+    private static final String UPDATE_SELLER = "UPDATE sellers SET first_name = ?, last_name = ?, phone_number = ?, email = ? WHERE id = ?";
+    private static final String DELETE_SELLER = "DELETE FROM sellers WHERE id = ?";
 
     public void addSeller(Seller seller) {
-        try (Connection connection = getConnection()) {
-            String query = "INSERT INTO sellers (first_name, last_name, phone_number, email) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SELLER)) {
+
             preparedStatement.setString(1, seller.getFirstName());
             preparedStatement.setString(2, seller.getLastName());
             preparedStatement.setString(3, seller.getPhoneNumber());
             preparedStatement.setString(4, seller.getEmail());
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Seller getSellerByEmail(String email) {
-        try (Connection connection = getConnection()) {
-            String query = "SELECT * FROM sellers WHERE email=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, email);
+    public Seller getSellerById(long id) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_SELLER_BY_ID)) {
+
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                String phoneNumber = resultSet.getString("phone_number");
-
-                return new Seller(firstName, lastName, phoneNumber, email);
+                return createSellerFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,17 +52,13 @@ public class SellerDao implements DatabaseConnection {
 
     public List<Seller> getAllSellers() {
         List<Seller> sellers = new ArrayList<>();
-        try (Connection connection = getConnection()) {
-            String query = "SELECT * FROM sellers";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_SELLERS)) {
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                String phoneNumber = resultSet.getString("phone_number");
-                String email = resultSet.getString("email");
-                sellers.add(new Seller(firstName, lastName, phoneNumber, email));
+                sellers.add(createSellerFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,28 +66,56 @@ public class SellerDao implements DatabaseConnection {
         return sellers;
     }
 
+    public Seller getSellerByEmail(String email) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_SELLER_BY_EMAIL)) {
+
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return createSellerFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void updateSeller(Seller seller) {
-        try (Connection connection = getConnection()) {
-            String query = "UPDATE sellers SET first_name=?, last_name=?, phone_number=? WHERE email=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SELLER)) {
+
             preparedStatement.setString(1, seller.getFirstName());
             preparedStatement.setString(2, seller.getLastName());
             preparedStatement.setString(3, seller.getPhoneNumber());
             preparedStatement.setString(4, seller.getEmail());
+            preparedStatement.setLong(5, seller.getId());
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteSeller(String email) {
-        try (Connection connection = getConnection()) {
-            String query = "DELETE FROM sellers WHERE email=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, email);
+    public void deleteSeller(long id) {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SELLER)) {
+
+            preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private Seller createSellerFromResultSet(ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("id");
+        String firstName = resultSet.getString("first_name");
+        String lastName = resultSet.getString("last_name");
+        String phoneNumber = resultSet.getString("phone_number");
+        String sellerEmail = resultSet.getString("email");
+
+        return new Seller(id, firstName, lastName, phoneNumber, sellerEmail);
     }
 }

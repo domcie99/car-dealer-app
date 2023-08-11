@@ -1,74 +1,99 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao.utils;
 
+import pl.ciesielski.dominik.app.cardealerapp.model.Address;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DatabaseInitializer implements DatabaseConnection {
+public class DatabaseInitializer {
 
-    public void createTables() {
-        try (Connection connection = getConnection()) {
-            createClientsTable(connection);
-            createVehiclesTable(connection);
-            createTransactionsTable(connection);
-            createSellersTable(connection);
+    private static final String CREATE_CLIENTS_TABLE =
+            "CREATE TABLE IF NOT EXISTS clients (" +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+                    "first_name VARCHAR(255) NOT NULL," +
+                    "last_name VARCHAR(255) NOT NULL," +
+                    "phone_number VARCHAR(15) NOT NULL," +
+                    "email VARCHAR(255) NOT NULL UNIQUE," +
+                    "address_id BIGINT NOT NULL," +
+                    "FOREIGN KEY (address_id) REFERENCES addresses(id)" +
+                    ")";
 
-            System.out.println("Tabele zostały utworzone.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private static final String CREATE_SELLERS_TABLE =
+            "CREATE TABLE IF NOT EXISTS sellers (" +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+                    "first_name VARCHAR(255) NOT NULL," +
+                    "last_name VARCHAR(255) NOT NULL," +
+                    "phone_number VARCHAR(15) NOT NULL," +
+                    "email VARCHAR(255) NOT NULL UNIQUE" +
+                    ")";
+
+    private static final String CREATE_VEHICLES_TABLE =
+            "CREATE TABLE IF NOT EXISTS vehicles (" +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+                    "brand VARCHAR(255) NOT NULL," +
+                    "model VARCHAR(255) NOT NULL," +
+                    "year_of_production INT NOT NULL," +
+                    "technical_condition VARCHAR(255) NOT NULL," +
+                    "mileage INT NOT NULL," +
+                    "vin_number VARCHAR(255) NOT NULL UNIQUE," +
+                    "registration_date DATE NOT NULL" +
+                    ")";
+
+    private static final String CREATE_TRANSACTIONS_TABLE =
+            "CREATE TABLE IF NOT EXISTS transactions (" +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+                    "client_id BIGINT NOT NULL," +
+                    "vehicle_id VARCHAR(255) NOT NULL," +
+                    "price DOUBLE NOT NULL," +
+                    "transaction_date DATE NOT NULL," +
+                    "FOREIGN KEY (client_id) REFERENCES clients(id)," +
+                    "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)" +
+                    ")";
+
+    private static final String CREATE_ADDRESSES_TABLE =
+            "CREATE TABLE IF NOT EXISTS addresses (" +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+                    "street VARCHAR(255) NOT NULL," +
+                    "city VARCHAR(255) NOT NULL," +
+                    "zip_code VARCHAR(10) NOT NULL," +
+                    "country VARCHAR(255) NOT NULL" +
+                    ")";
+
+    private static final String CREATE_CLIENTS_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS clients_seq";
+    private static final String CREATE_SELLERS_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS sellers_seq";
+    private static final String CREATE_VEHICLES_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS vehicles_seq";
+    private static final String CREATE_TRANSACTIONS_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS transactions_seq";
+    private static final String CREATE_ADDRESSES_SEQUENCE =
+            "CREATE SEQUENCE IF NOT EXISTS addresses_seq";
+
+    private static void executeUpdateQuery(Connection connection, String query) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
         }
     }
 
-    private void createClientsTable(Connection connection) throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS clients ("
-                + "first_name VARCHAR(255) NOT NULL,"
-                + "last_name VARCHAR(255) NOT NULL,"
-                + "phone_number VARCHAR(15) NOT NULL,"
-                + "email VARCHAR(255) PRIMARY KEY,"
-                + "address VARCHAR(255) NOT NULL"
-                + ")";
-        executeUpdateQuery(connection, query);
-    }
+    public void createTables() {
+        try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
+            executeUpdateQuery(connection, CREATE_ADDRESSES_TABLE);
+            executeUpdateQuery(connection, CREATE_CLIENTS_TABLE);
+            executeUpdateQuery(connection, CREATE_SELLERS_TABLE);
+            executeUpdateQuery(connection, CREATE_VEHICLES_TABLE);
+            executeUpdateQuery(connection, CREATE_TRANSACTIONS_TABLE);
 
-    private void createVehiclesTable(Connection connection) throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS vehicles ("
-                + "brand VARCHAR(255) NOT NULL,"
-                + "model VARCHAR(255) NOT NULL,"
-                + "yearOfProduction INT NOT NULL,"
-                + "technicalCondition VARCHAR(255) NOT NULL,"
-                + "mileage INT NOT NULL,"
-                + "vinNumber VARCHAR(255) NOT NULL PRIMARY KEY,"
-                + "registrationDate DATE NOT NULL"
-                + ")";
-        executeUpdateQuery(connection, query);
-    }
+            executeUpdateQuery(connection, CREATE_CLIENTS_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_SELLERS_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_VEHICLES_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_TRANSACTIONS_SEQUENCE);
+            executeUpdateQuery(connection, CREATE_ADDRESSES_SEQUENCE);
 
-    private void createTransactionsTable(Connection connection) throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS transactions ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "client_email VARCHAR(255) NOT NULL,"
-                + "vin_number VARCHAR(255) NOT NULL,"
-                + "price INT NOT NULL,"
-                + "transaction_date DATE NOT NULL,"
-                + "FOREIGN KEY (client_email) REFERENCES clients(email),"
-                + "FOREIGN KEY (vin_number) REFERENCES vehicles(vinNumber)"
-                + ")";
-        executeUpdateQuery(connection, query);
-    }
-
-    private void createSellersTable(Connection connection) throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS sellers ("
-                + "first_name VARCHAR(255) NOT NULL,"
-                + "last_name VARCHAR(255) NOT NULL,"
-                + "phone_number VARCHAR(15) NOT NULL,"
-                + "email VARCHAR(255) PRIMARY KEY"
-                + ")";
-        executeUpdateQuery(connection, query);
-    }
-
-    private void executeUpdateQuery(Connection connection, String query) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
+            //System.out.println("Tables have been created.");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
