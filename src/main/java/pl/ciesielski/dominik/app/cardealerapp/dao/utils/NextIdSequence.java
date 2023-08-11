@@ -1,4 +1,4 @@
-package pl.ciesielski.dominik.app.cardealerapp.model.utils;
+package pl.ciesielski.dominik.app.cardealerapp.dao.utils;
 
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 
