@@ -25,7 +25,7 @@ class ClientDaoTest {
     private long nextAddressId;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception{
         System.out.println("Setup");
         DatabaseInitializer initializer = new DatabaseInitializer();
         initializer.createTables();
@@ -56,7 +56,6 @@ class ClientDaoTest {
         }
     }
 
-    // TODO: 04.08.2023 Napisac test jednostkowy dla metody addclient 
     
     @Test
     @Disabled
