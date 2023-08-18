@@ -1,4 +1,4 @@
-package pl.ciesielski.dominik.app.cardealerapp.model;
+package pl.ciesielski.dominik.app.cardealerapp.controller.model;
 
 public class AddressBuilder {
     private long id;

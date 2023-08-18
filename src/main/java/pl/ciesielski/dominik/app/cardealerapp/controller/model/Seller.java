@@ -1,4 +1,4 @@
-package pl.ciesielski.dominik.app.cardealerapp.model;
+package pl.ciesielski.dominik.app.cardealerapp.controller.model;
 
 public class Seller {
     private long id;

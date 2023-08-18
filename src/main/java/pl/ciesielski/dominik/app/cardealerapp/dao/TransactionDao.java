@@ -1,9 +1,9 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
-import pl.ciesielski.dominik.app.cardealerapp.model.Transaction;
-import pl.ciesielski.dominik.app.cardealerapp.model.Vehicle;
-import pl.ciesielski.dominik.app.cardealerapp.model.Client;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Transaction;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Vehicle;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Client;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,7 +1,5 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao.utils;
 
-import pl.ciesielski.dominik.app.cardealerapp.model.Address;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

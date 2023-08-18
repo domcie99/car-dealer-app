@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseInitializer;
-import pl.ciesielski.dominik.app.cardealerapp.model.Address;
-import pl.ciesielski.dominik.app.cardealerapp.model.AddressBuilder;
-import pl.ciesielski.dominik.app.cardealerapp.model.Client;
-import pl.ciesielski.dominik.app.cardealerapp.model.utils.NextIdSequence;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Address;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.AddressBuilder;
+import pl.ciesielski.dominik.app.cardealerapp.controller.model.Client;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.NextIdSequence;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ class ClientDaoIntegrationTest {
     private AddressDao addressDao;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws SQLException{
 
         DatabaseInitializer initializer = new DatabaseInitializer();
         initializer.createTables();
@@ -67,8 +67,6 @@ class ClientDaoIntegrationTest {
             e.printStackTrace();
         }
     }
-
-    // TODO: 04.08.2023 Dodać metody Setup i Teardown zawierające inicializacje i czyszczenie bazy danych.
 
     @Test
     void shouldReturnClientByEmailWhenClientExists() {
