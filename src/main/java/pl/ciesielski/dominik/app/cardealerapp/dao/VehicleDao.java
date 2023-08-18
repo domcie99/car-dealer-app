@@ -1,5 +1,6 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
+import pl.ciesielski.dominik.app.cardealerapp.controller.VehicleController;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.DatabaseConnectionManager;
 import pl.ciesielski.dominik.app.cardealerapp.controller.model.Vehicle;
 
@@ -9,9 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class VehicleDao { //Warstwa dostępu do danych. Weryfikacja poprawności wprowadzania danych - błędy SQL. Utrwalanie i pobieranie danych na przykład z bazy danych.
 
+    private static final Logger LOGGER = Logger.getLogger(VehicleDao.class.getName());
     private static final String INSERT_VEHICLE = "INSERT INTO vehicles (brand, model, year_of_production, technical_condition, mileage, vin_number, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_VEHICLE_BY_ID = "SELECT * FROM vehicles WHERE id = ?";
     private static final String GET_ALL_VEHICLES = "SELECT * FROM vehicles";
@@ -49,6 +52,12 @@ public class VehicleDao { //Warstwa dostępu do danych. Weryfikacja poprawności
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public Vehicle getVehicleByVin(String vin) {
+        LOGGER.info("getVehicleByVin(" + vin + ")");
+        LOGGER.info("getVehicleByVin(...)=" + null);
         return null;
     }
 
