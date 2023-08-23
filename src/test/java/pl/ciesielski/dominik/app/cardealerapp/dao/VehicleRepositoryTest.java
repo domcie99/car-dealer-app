@@ -21,4 +21,21 @@ class VehicleRepositoryTest {
         // Then
 
     }
+
+    @Test
+    void update() {
+        // Given
+        VehicleRepository vehicleRepository = new VehicleRepository();
+
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setId(402L);
+        vehicleEntity.setBrand("Peugeot");
+        vehicleEntity.setModel("4008");
+
+        // When
+        vehicleRepository.update(vehicleEntity);
+
+        // Then
+
+    }
 }
