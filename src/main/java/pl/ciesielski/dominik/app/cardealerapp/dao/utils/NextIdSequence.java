@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO: 11.08.2023 Napisać test Jednostkowy.
-// TODO: 11.08.2023 Zamiast zwracać -1 rzuca wyjątkiem
-
 public class NextIdSequence {
 
     public static long getNextIdForTable(String tableName) throws SQLException {

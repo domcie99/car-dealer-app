@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class CredentialManager { // TODO: 11.08.2023 Test Jednostkowy 
+public class CredentialManager {
     private static CredentialManager instance;
     private Properties properties;
 

@@ -5,15 +5,13 @@ import org.junit.jupiter.api.Test;
 import pl.ciesielski.dominik.app.cardealerapp.api.exception.VehicleException;
 import pl.ciesielski.dominik.app.cardealerapp.controller.model.Vehicle;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class VehicleControllerTest {
 
 
     @Test
     void shouldCreateVehicleWithoutException() throws VehicleException {
         // Given
-        VehicleController vehicleController = new VehicleController();
+        VehicleController vehicleController = new VehicleController(null);
         Vehicle vehicle = new Vehicle();
         vehicle.setBrand("DS");
 
@@ -27,7 +25,7 @@ class VehicleControllerTest {
     @Test
     void shouldThrowNewExceptionWhileCreatingNewVehicle() {
         // Given
-        VehicleController vehicleController = new VehicleController();
+        VehicleController vehicleController = new VehicleController(null);
 
         // When
 
