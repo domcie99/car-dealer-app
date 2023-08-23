@@ -1,8 +1,7 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import pl.ciesielski.dominik.app.cardealerapp.dao.entity.VehicleEntity;
 
 class VehicleRepositoryTest {
 
@@ -11,8 +10,13 @@ class VehicleRepositoryTest {
         // Given
         VehicleRepository vehicleRepository = new VehicleRepository();
 
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setBrand("Opel");
+        vehicleEntity.setModel("Astra");
+        vehicleEntity.setVinNumber("ADSCG543543");
+
         // When
-        vehicleRepository.create();
+        vehicleRepository.create(vehicleEntity);
 
         // Then
 
