@@ -1,21 +1,29 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao.entity;
 
-import jakarta.persistence.*;
-import java.util.Date;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "TRANSACTIONS")
 public class TransactionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    private Long id;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vehicle_id")
     private VehicleEntity vehicle;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "client_id")
     private ClientEntity client;
 
@@ -23,7 +31,7 @@ public class TransactionEntity {
     private double price;
 
     @Column(name = "TRANSACTION_DATE")
-    private Date transactionDate;
+    private LocalDate transactionDate;
 
     public TransactionEntity() {
     }
@@ -60,11 +68,22 @@ public class TransactionEntity {
         this.price = price;
     }
 
-    public Date getTransactionDate() {
+    public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionEntity{" +
+                "id=" + id +
+                ", vehicle=" + vehicle +
+                ", client=" + client +
+                ", price=" + price +
+                ", transactionDate=" + transactionDate +
+                '}';
     }
 }
