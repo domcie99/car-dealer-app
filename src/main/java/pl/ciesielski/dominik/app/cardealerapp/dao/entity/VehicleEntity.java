@@ -5,26 +5,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "VEHICLES")
 public class VehicleEntity {
+
     @Id
     @GeneratedValue
     private Long id;
 
     private String brand;
     private String model;
+
     @Column(name = "YEAR_OF_PRODUCTION")
     private int yearOfProduction;
+
     @Column(name = "TECHNICAL_CONDITION")
     private String technicalCondition;
     private int mileage;
-    @Column(name = "VIN_NUMBER")
+
+    @Column(name = "VIN_NUMBER", unique = true)
     private String vinNumber;
+
     @Column(name = "REGISTRATION_DATE")
+    @Temporal(TemporalType.DATE)
     private Date registrationDate;
 
     public VehicleEntity() {
