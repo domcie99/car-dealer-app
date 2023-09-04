@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "ADDRESSES")
 public class AddressEntity {
-    // TODO: 23.08.2023 Stworzenie pozostałych encji oraz reposotory dla modeli.
     @Id
     @GeneratedValue
     private Long id;
