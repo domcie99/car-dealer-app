@@ -2,64 +2,64 @@ package pl.ciesielski.dominik.app.cardealerapp.dao.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import pl.ciesielski.dominik.app.cardealerapp.dao.entity.ClientEntity;
+import pl.ciesielski.dominik.app.cardealerapp.dao.entity.AddressEntity;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.SessionFactoryManager;
 
 import java.util.logging.Logger;
 
-public class ClientRepository {
+public class AddressRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(ClientRepository.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AddressRepository.class.getName());
 
     private SessionFactory sessionFactory;
 
-    public ClientRepository() {
+    public AddressRepository() {
         sessionFactory = SessionFactoryManager.getSessionFactory();
     }
 
-    public void create(ClientEntity clientEntity) {
-        LOGGER.info("create(" + clientEntity + ")");
+    public void create(AddressEntity addressEntity) {
+        LOGGER.info("create(" + addressEntity + ")");
 
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.persist(clientEntity);
+            session.persist(addressEntity);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
 
-        LOGGER.info("create(...)=" + clientEntity);
+        LOGGER.info("create(...)=" + addressEntity);
     }
 
-    public ClientEntity read(Long id) {
+    public AddressEntity read(Long id) {
         LOGGER.info("read(" + id + ")");
 
         Session session = sessionFactory.openSession();
         try {
-            ClientEntity clientEntity = session.get(ClientEntity.class, id);
-            if (clientEntity == null) {
-                LOGGER.warning("ClientEntity with ID " + id + " not found.");
+            AddressEntity addressEntity = session.get(AddressEntity.class, id);
+            if (addressEntity == null) {
+                LOGGER.warning("AddressEntity with ID " + id + " not found.");
             }
-            return clientEntity;
+            return addressEntity;
         } finally {
             session.close();
         }
     }
 
-    public void update(ClientEntity clientEntity) {
-        LOGGER.info("update(" + clientEntity + ")");
+    public void update(AddressEntity addressEntity) {
+        LOGGER.info("update(" + addressEntity + ")");
 
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.merge(clientEntity);
+            session.merge(addressEntity);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
 
-        LOGGER.info("update(...)=" + clientEntity);
+        LOGGER.info("update(...)=" + addressEntity);
     }
 
     public void delete(Long id) {
@@ -68,12 +68,12 @@ public class ClientRepository {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            ClientEntity clientEntity = session.get(ClientEntity.class, id);
-            if (clientEntity != null) {
-                session.delete(clientEntity);
+            AddressEntity addressEntity = session.get(AddressEntity.class, id);
+            if (addressEntity != null) {
+                session.delete(addressEntity);
                 session.getTransaction().commit();
             } else {
-                LOGGER.warning("ClientEntity with ID " + id + " not found, delete operation skipped.");
+                LOGGER.warning("AddressEntity with ID " + id + " not found, delete operation skipped.");
             }
         } catch (Exception e) {
             session.getTransaction().rollback();

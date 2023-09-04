@@ -2,64 +2,64 @@ package pl.ciesielski.dominik.app.cardealerapp.dao.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import pl.ciesielski.dominik.app.cardealerapp.dao.entity.ClientEntity;
+import pl.ciesielski.dominik.app.cardealerapp.dao.entity.SellerEntity;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.SessionFactoryManager;
 
 import java.util.logging.Logger;
 
-public class ClientRepository {
+public class SellerRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(ClientRepository.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SellerRepository.class.getName());
 
     private SessionFactory sessionFactory;
 
-    public ClientRepository() {
+    public SellerRepository() {
         sessionFactory = SessionFactoryManager.getSessionFactory();
     }
 
-    public void create(ClientEntity clientEntity) {
-        LOGGER.info("create(" + clientEntity + ")");
+    public void create(SellerEntity sellerEntity) {
+        LOGGER.info("create(" + sellerEntity + ")");
 
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.persist(clientEntity);
+            session.persist(sellerEntity);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
 
-        LOGGER.info("create(...)=" + clientEntity);
+        LOGGER.info("create(...)=" + sellerEntity);
     }
 
-    public ClientEntity read(Long id) {
+    public SellerEntity read(Long id) {
         LOGGER.info("read(" + id + ")");
 
         Session session = sessionFactory.openSession();
         try {
-            ClientEntity clientEntity = session.get(ClientEntity.class, id);
-            if (clientEntity == null) {
-                LOGGER.warning("ClientEntity with ID " + id + " not found.");
+            SellerEntity sellerEntity = session.get(SellerEntity.class, id);
+            if (sellerEntity == null) {
+                LOGGER.warning("SellerEntity with ID " + id + " not found.");
             }
-            return clientEntity;
+            return sellerEntity;
         } finally {
             session.close();
         }
     }
 
-    public void update(ClientEntity clientEntity) {
-        LOGGER.info("update(" + clientEntity + ")");
+    public void update(SellerEntity sellerEntity) {
+        LOGGER.info("update(" + sellerEntity + ")");
 
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.merge(clientEntity);
+            session.merge(sellerEntity);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
 
-        LOGGER.info("update(...)=" + clientEntity);
+        LOGGER.info("update(...)=" + sellerEntity);
     }
 
     public void delete(Long id) {
@@ -68,12 +68,12 @@ public class ClientRepository {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            ClientEntity clientEntity = session.get(ClientEntity.class, id);
-            if (clientEntity != null) {
-                session.delete(clientEntity);
+            SellerEntity sellerEntity = session.get(SellerEntity.class, id);
+            if (sellerEntity != null) {
+                session.delete(sellerEntity);
                 session.getTransaction().commit();
             } else {
-                LOGGER.warning("ClientEntity with ID " + id + " not found, delete operation skipped.");
+                LOGGER.warning("SellerEntity with ID " + id + " not found, delete operation skipped.");
             }
         } catch (Exception e) {
             session.getTransaction().rollback();
