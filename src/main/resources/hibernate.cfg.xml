@@ -28,6 +28,10 @@
         <property name="hbm2ddl.auto">update</property>
 
         <!-- Names the annotated entity class -->
+        <mapping class="pl.ciesielski.dominik.app.cardealerapp.dao.entity.AddressEntity"/>
+        <mapping class="pl.ciesielski.dominik.app.cardealerapp.dao.entity.ClientEntity"/>
+        <mapping class="pl.ciesielski.dominik.app.cardealerapp.dao.entity.SellerEntity"/>
+        <mapping class="pl.ciesielski.dominik.app.cardealerapp.dao.entity.TransactionEntity"/>
         <mapping class="pl.ciesielski.dominik.app.cardealerapp.dao.entity.VehicleEntity"/>
 
     </session-factory>
