@@ -1,11 +1,9 @@
-package pl.ciesielski.dominik.app.cardealerapp.dao;
+package pl.ciesielski.dominik.app.cardealerapp.dao.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import pl.ciesielski.dominik.app.cardealerapp.dao.entity.VehicleEntity;
+import pl.ciesielski.dominik.app.cardealerapp.dao.utils.SessionFactoryManager;
 
 import java.util.logging.Logger;
 
@@ -17,18 +15,7 @@ public class VehicleRepository {
 
     public VehicleRepository() {
         // TODO: 23.08.2023 Stworzyć singleton dla poniższego kodu. SessionFactoryManager
-        StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .configure("hibernate.cfg.xml")
-                .build();
-
-        try {
-            sessionFactory = new MetadataSources(serviceRegistry)
-                    .buildMetadata()
-                    .buildSessionFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
-            StandardServiceRegistryBuilder.destroy(serviceRegistry);
-        }
+        sessionFactory = SessionFactoryManager.getSessionFactory();
     }
 
     public void create(VehicleEntity vehicleEntity) {

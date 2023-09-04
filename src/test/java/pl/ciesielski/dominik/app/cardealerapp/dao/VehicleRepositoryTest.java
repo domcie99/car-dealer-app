@@ -2,6 +2,7 @@ package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import org.junit.jupiter.api.Test;
 import pl.ciesielski.dominik.app.cardealerapp.dao.entity.VehicleEntity;
+import pl.ciesielski.dominik.app.cardealerapp.dao.repository.VehicleRepository;
 
 class VehicleRepositoryTest {
 

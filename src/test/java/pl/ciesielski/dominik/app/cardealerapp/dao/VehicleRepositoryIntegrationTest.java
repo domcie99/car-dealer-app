@@ -1,8 +1,7 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import pl.ciesielski.dominik.app.cardealerapp.dao.repository.VehicleRepository;
 
 class VehicleRepositoryIntegrationTest {
     // TODO: 23.08.2023 Dokończyć implementacje testu integracyjnego dla metody update.
