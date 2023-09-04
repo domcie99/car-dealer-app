@@ -14,7 +14,6 @@ public class VehicleRepository {
     private SessionFactory sessionFactory;
 
     public VehicleRepository() {
-        // TODO: 23.08.2023 Stworzyć singleton dla poniższego kodu. SessionFactoryManager
         sessionFactory = SessionFactoryManager.getSessionFactory();
     }
 
@@ -33,8 +32,21 @@ public class VehicleRepository {
         LOGGER.info("create(...)=" + vehicleEntity);
     }
 
-    public void read(Long id) {
+    public VehicleEntity read(Long id) {
+        LOGGER.info("read(" + id + ")");
+
+        Session session = sessionFactory.openSession();
+        try {
+            VehicleEntity vehicleEntity = session.get(VehicleEntity.class, id);
+            if (vehicleEntity == null) {
+                LOGGER.warning("VehicleEntity with ID " + id + " not found.");
+            }
+            return vehicleEntity;
+        } finally {
+            session.close();
+        }
     }
+
 
     public void update(VehicleEntity vehicleEntity) {
         LOGGER.info("update(" + vehicleEntity + ")");
@@ -50,4 +62,26 @@ public class VehicleRepository {
 
         LOGGER.info("update(...)=" + vehicleEntity);
     }
+
+    public void delete(Long id) {
+        LOGGER.info("delete(" + id + ")");
+
+        Session session = sessionFactory.openSession();
+        try {
+            session.getTransaction().begin();
+            VehicleEntity vehicleEntity = session.get(VehicleEntity.class, id);
+            if (vehicleEntity != null) {
+                session.delete(vehicleEntity);
+                session.getTransaction().commit();
+            } else {
+                LOGGER.warning("VehicleEntity with ID " + id + " not found, delete operation skipped.");
+            }
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        LOGGER.info("delete(...)=" + id);
+    }
+
 }

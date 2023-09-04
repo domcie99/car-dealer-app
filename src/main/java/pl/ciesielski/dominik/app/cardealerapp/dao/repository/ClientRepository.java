@@ -13,7 +13,6 @@ public class ClientRepository {
     private SessionFactory sessionFactory;
 
     public ClientRepository() {
-        // TODO: 23.08.2023 Stworzyć singleton dla poniższego kodu. SessionFactoryManager
         sessionFactory = SessionFactoryManager.getSessionFactory();
     }
 
