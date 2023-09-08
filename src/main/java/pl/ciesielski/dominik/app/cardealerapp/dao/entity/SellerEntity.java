@@ -1,9 +1,11 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,14 +27,17 @@ public class SellerEntity {
     @Column(name = "EMAIL")
     private String email;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private VehicleEntity vehicle;
+
     public SellerEntity() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,6 +73,14 @@ public class SellerEntity {
         this.email = email;
     }
 
+    public VehicleEntity getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(VehicleEntity vehicle) {
+        this.vehicle = vehicle;
+    }
+
     @Override
     public String toString() {
         return "SellerEntity{" +
@@ -76,6 +89,7 @@ public class SellerEntity {
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", vehicle=" + vehicle +
                 '}';
     }
 }

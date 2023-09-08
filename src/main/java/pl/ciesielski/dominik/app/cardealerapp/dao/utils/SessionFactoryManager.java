@@ -12,7 +12,7 @@ public class SessionFactoryManager {
     private static final Logger LOGGER = Logger.getLogger(SessionFactoryManager.class.getName());
     private static SessionFactory sessionFactory;
 
-    private SessionFactoryManager() {
+    private SessionFactoryManager() { // TODO: 08.09.2023 Refaktoryzacja session manager.
     }
 
     public static SessionFactory getSessionFactory() {

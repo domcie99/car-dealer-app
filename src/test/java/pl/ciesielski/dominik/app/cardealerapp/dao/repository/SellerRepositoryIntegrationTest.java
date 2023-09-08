@@ -1,9 +1,11 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao.repository;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pl.ciesielski.dominik.app.cardealerapp.dao.entity.SellerEntity;
+import pl.ciesielski.dominik.app.cardealerapp.dao.entity.VehicleEntity;
 import pl.ciesielski.dominik.app.cardealerapp.dao.utils.SessionFactoryManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class SellerRepositoryIntegrationTest {
 
+    public static final String SELLER_FIRST_NAME_EVA = "Eva";
     private static SellerRepository sellerRepository;
 
     @BeforeAll
@@ -33,10 +36,10 @@ public class SellerRepositoryIntegrationTest {
 
         // When
         sellerRepository.create(sellerEntity);
+        SellerEntity createdSeller = sellerRepository.read(sellerEntity.getId());
 
         // Then
         assertNotNull(sellerEntity.getId(), "ID should not be null after creation");
-        SellerEntity createdSeller = sellerRepository.read(sellerEntity.getId());
         assertNotNull(createdSeller, "Created seller should not be null");
         assertEquals("Bob", createdSeller.getFirstName(), "First name should be 'Bob'");
         assertEquals("Johnson", createdSeller.getLastName(), "Last name should be 'Johnson'");
@@ -63,7 +66,7 @@ public class SellerRepositoryIntegrationTest {
     void update() {
         // Given
         SellerEntity sellerEntity = new SellerEntity();
-        sellerEntity.setFirstName("Eva");
+        sellerEntity.setFirstName(SELLER_FIRST_NAME_EVA);
         sellerEntity.setLastName("Brown");
         sellerRepository.create(sellerEntity);
 
@@ -73,9 +76,11 @@ public class SellerRepositoryIntegrationTest {
         SellerEntity updatedSeller = sellerRepository.read(sellerEntity.getId());
 
         // Then
-        assertNotNull(updatedSeller, "Updated seller should not be null");
-        assertEquals("Eva", updatedSeller.getFirstName(), "First name should still be 'Eva'");
-        assertEquals("White", updatedSeller.getLastName(), "Last name should be updated to 'White'");
+        Assertions.assertAll( // TODO: 08.09.2023 AssertAll i finals. 
+                () -> assertNotNull(updatedSeller, "Updated seller should not be null"),
+                () -> assertEquals(SELLER_FIRST_NAME_EVA, updatedSeller.getFirstName(), "First name should still be '" + SELLER_FIRST_NAME_EVA + "'"),
+                () -> assertEquals("White", updatedSeller.getLastName(), "Last name should be updated to 'White'")
+        );
     }
 
     @Test
@@ -92,5 +97,28 @@ public class SellerRepositoryIntegrationTest {
 
         // Then
         assertNull(deletedSeller, "Deleted seller should be null");
+    }
+
+    @Test
+    void createWithVehicle() {
+        // Given
+        SellerEntity sellerEntity = new SellerEntity();
+        sellerEntity.setFirstName("Bob");
+        sellerEntity.setLastName("Johnson");
+
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setModel("Opel");
+
+        sellerEntity.setVehicle(vehicleEntity);
+
+        // When
+        sellerRepository.create(sellerEntity);
+        SellerEntity createdSeller = sellerRepository.read(sellerEntity.getId());
+
+        // Then
+        assertNotNull(sellerEntity.getId(), "ID should not be null after creation");
+        assertNotNull(createdSeller, "Created seller should not be null");
+        assertEquals("Bob", createdSeller.getFirstName(), "First name should be 'Bob'");
+        assertEquals("Johnson", createdSeller.getLastName(), "Last name should be 'Johnson'");
     }
 }
