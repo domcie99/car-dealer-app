@@ -1,12 +1,17 @@
 package pl.ciesielski.dominik.app.cardealerapp.dao.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "SELLER")
 @Table(name = "SELLERS")
 public class SellerEntity {
     @Id
@@ -25,14 +30,21 @@ public class SellerEntity {
     @Column(name = "EMAIL")
     private String email;
 
+//    @OneToOne(cascade = CascadeType.PERSIST)
+//    private VehicleEntity vehicle;
+
+    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "SELLER_ID")
+    private List<VehicleEntity> vehicles = new ArrayList<>();
+
     public SellerEntity() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,6 +80,14 @@ public class SellerEntity {
         this.email = email;
     }
 
+    public List<VehicleEntity> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<VehicleEntity> vehicles) {
+        this.vehicles = vehicles;
+    }
+
     @Override
     public String toString() {
         return "SellerEntity{" +
@@ -76,6 +96,7 @@ public class SellerEntity {
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", vehicles=" + vehicles +
                 '}';
     }
 }

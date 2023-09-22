@@ -46,7 +46,7 @@ class ClientDaoTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() { // TODO: 08.09.2023 DATABASEUTILS Czyszczenie bazy danych.
         try (Connection connection = DatabaseConnectionManager.getInstance().getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DROP ALL OBJECTS;");
