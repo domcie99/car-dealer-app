@@ -4,13 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import java.util.Date;
 
-@Entity
+@Entity(name = "VEHICLE")
 @Table(name = "VEHICLES")
 public class VehicleEntity {
 
@@ -34,6 +35,10 @@ public class VehicleEntity {
     @Column(name = "REGISTRATION_DATE")
     @Temporal(TemporalType.DATE)
     private Date registrationDate;
+
+    @ManyToOne
+//    @JoinColumn(name = "VEHICLE_ID")
+    private SellerEntity seller;
 
     public VehicleEntity() {
 
@@ -101,6 +106,14 @@ public class VehicleEntity {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public SellerEntity getSeller() {
+        return seller;
+    }
+
+    public void setSeller(SellerEntity seller) {
+        this.seller = seller;
     }
 
     @Override

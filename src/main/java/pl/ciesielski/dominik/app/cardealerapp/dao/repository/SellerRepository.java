@@ -17,7 +17,7 @@ public class SellerRepository {
         sessionFactory = SessionFactoryManager.getSessionFactory();
     }
 
-    public void create(SellerEntity sellerEntity) {
+    public SellerEntity create(SellerEntity sellerEntity) {
         LOGGER.info("create(" + sellerEntity + ")");
 
         Session session = sessionFactory.openSession();
@@ -30,6 +30,7 @@ public class SellerRepository {
         }
 
         LOGGER.info("create(...)=" + sellerEntity);
+        return sellerEntity;
     }
 
     public SellerEntity read(Long id) {
